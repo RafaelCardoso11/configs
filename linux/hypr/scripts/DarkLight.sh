@@ -1,12 +1,14 @@
 #!/bin/bash
-## /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# Theme is locked while presentation mode (SUPER+P) is on
+if [ -f "${XDG_RUNTIME_DIR:-/tmp}/hypr-presentation" ]; then
+    notify-send -u critical -t 3000 -a "Presentation" "Theme locked" "Turn off presentation mode (SUPER+P) to change it"
+    exit 0
+fi
+
 # For Dark and Light switching
 # Note: Scripts are looking for keywords Light or Dark except for wallpapers as the are in a separate directories
 
 # Paths
-wallpaper_base_path="$HOME/Pictures/wallpapers/Dynamic-Wallpapers"
-dark_wallpapers="$wallpaper_base_path/Dark"
-light_wallpapers="$wallpaper_base_path/Light"
 hypr_config_path="$HOME/.config/hypr"
 swaync_style="$HOME/.config/swaync/style.css"
 ags_style="$HOME/.config/ags/user/style.css"
@@ -36,12 +38,8 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 60 --transition-type 
 # Determine current theme mode
 if [ "$(cat $HOME/.cache/.theme_mode)" = "Light" ]; then
     next_mode="Dark"
-    # Logic for Dark mode
-    wallpaper_path="$dark_wallpapers"
 else
     next_mode="Light"
-    # Logic for Light mode
-    wallpaper_path="$light_wallpapers"
 fi
 
 # Function to update theme mode for the next cycle
@@ -78,7 +76,8 @@ set_waybar_style() {
 }
 
 # Call the function after determining the mode
-set_waybar_style "$next_mode"
+# the macOS bar keeps fixed colors, so its style is not swapped here
+# set_waybar_style "$next_mode"
 notify_user "$next_mode"
 
 
@@ -119,12 +118,20 @@ for pid_kitty in $(pidof kitty); do
     kill -SIGUSR1 "$pid_kitty"
 done
 
-# Set Dynamic Wallpaper for Dark or Light Mode
-if [ "$next_mode" = "Dark" ]; then
-    next_wallpaper="$(find -L "${dark_wallpapers}" -type f \( -iname "*.jpg" -o -iname "*.png" \) -print0 | shuf -n1 -z | xargs -0)"
-else
-    next_wallpaper="$(find -L "${light_wallpapers}" -type f \( -iname "*.jpg" -o -iname "*.png" \) -print0 | shuf -n1 -z | xargs -0)"
+# Each mode keeps its own wallpaper: the one on screen now belongs to the mode we
+# are leaving, and the mode we enter gets back the one saved for it (if any)
+[ "$next_mode" = "Dark" ] && prev_mode="Light" || prev_mode="Dark"
+saved_dir="$HOME/.cache/hypr-mode-wallpaper"
+focused=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+current_wallpaper=$(swww query | sed -nE "s/^: $focused:.*image: (.*)$/\1/p")
+
+if [ -f "$current_wallpaper" ]; then
+    mkdir -p "$saved_dir"
+    echo "$current_wallpaper" > "$saved_dir/$prev_mode"
 fi
+
+next_wallpaper=$(cat "$saved_dir/$next_mode" 2>/dev/null)
+[ -f "$next_wallpaper" ] || next_wallpaper="$current_wallpaper"
 
 # Update wallpaper using swww command
 $swww "${next_wallpaper}" $effect
@@ -252,3 +259,6 @@ notify-send -u low -i "$notif" " Themes switched to:" " $next_mode Mode"
 
 exit 0
 
+
+# refresh the bar light/dark indicator
+pkill -RTMIN+9 waybar

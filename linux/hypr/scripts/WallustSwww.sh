@@ -1,39 +1,33 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Wallust Colors for current wallpaper
-
-# Define the path to the swww cache directory
-cache_dir="$HOME/.cache/swww/"
-
-# Get a list of monitor outputs
-monitor_outputs=($(ls "$cache_dir"))
 
 # Initialize a flag to determine if the ln command was executed
 ln_success=false
 
 # Get current focused monitor
-current_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
-echo $current_monitor
-# Construct the full path to the cache file
-cache_file="$cache_dir$current_monitor"
-echo $cache_file
-# Check if the cache file exists for the current monitor output
-if [ -f "$cache_file" ]; then
-    # Get the wallpaper path from the cache file
-    wallpaper_path=$(grep -v 'Lanczos3' "$cache_file" | head -n 1)
+current_monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+
+# Ask the daemon what the focused monitor shows; awww keeps no per-monitor path file
+wallpaper_path=$(swww query | awk -F'image: ' -v m="$current_monitor" '$0 ~ ": "m":" {print $2}')
+
+if [ -f "$wallpaper_path" ]; then
     echo $wallpaper_path
-    # symlink the wallpaper to the location Rofi can access
-    if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then
-        ln_success=true  # Set the flag to true upon successful execution
-    fi
-    # copy the wallpaper for wallpaper effects
-	cp -r "$wallpaper_path" "$HOME/.config/hypr/wallpaper_effects/.wallpaper_current"
+    # copy the wallpaper for wallpaper effects and the lock screen
+	cp -r "$wallpaper_path" "$HOME/.config/hypr/wallpaper_effects/.wallpaper_current" && ln_success=true
 fi
 
 # Check the flag before executing further commands
-if [ "$ln_success" = true ]; then
+# A theme picked in vicinae (anything but "wallust") wins over wallpaper colors
+vicinae_theme=$(grep -v '^//' "$HOME/.config/vicinae/settings.json" | jq -r '.theme.dark.name // "wallust"' 2>/dev/null)
+
+if [ "$ln_success" = true ] && [ "$vicinae_theme" = wallust ]; then
     # execute wallust
 	echo 'about to execute wallust'
     # execute wallust skipping tty and terminal changes
-    wallust run "$wallpaper_path" -s &
+    # vicinae only rescans themes on directory changes, so the regenerated file is
+    # swapped in with mv instead of being rewritten in place
+    theme_file="$HOME/.local/share/vicinae/themes/wallust.toml"
+    { wallust run "$wallpaper_path" -s &&
+      cp "$theme_file" "$theme_file.tmp" && mv -f "$theme_file.tmp" "$theme_file" &&
+      sleep 0.3 && vicinae theme set wallust >/dev/null 2>&1; } &
 fi
