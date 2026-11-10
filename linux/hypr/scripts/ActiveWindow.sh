@@ -8,7 +8,7 @@ name() {
     "") echo "Desktop" ;;
     brave-browser) echo "Brave" ;;
     kitty) echo "Terminal" ;;
-    org.gnome.Nautilus) echo "Finder" ;;
+    org.gnome.Nautilus) echo "Files" ;;
     code) echo "VS Code" ;;
     *.*.*) echo "${1##*.}" ;; # reverse-DNS app ids: org.gnome.Loupe -> Loupe
     *) echo "$1" ;;
