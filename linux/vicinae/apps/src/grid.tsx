@@ -41,17 +41,25 @@ const SECTIONS: [string, string][] = [
 ];
 const OTHER = "Other";
 
-type App = Application & { section: string };
+type App = Application & { section: string; hidden: boolean };
 
-async function sectionOf(app: Application): Promise<string> {
+async function describe(app: Application): Promise<App> {
   try {
     const text = await readFile(app.path, "utf8");
+    // getApplications() also returns helper entries apps install for menus to skip (e.g. VS Code's URL handler)
+    const hidden = /^(NoDisplay|Hidden)=true\s*$/m.test(text);
+    return { ...app, hidden, section: sectionFromDesktop(text) };
+  } catch {
+    return { ...app, hidden: false, section: OTHER };
+  }
+}
+
+function sectionFromDesktop(text: string): string {
+  {
     // browser-installed web apps (Brave/Chrome "Install app") carry no Categories, only --app-id
     if (/^Exec=.*--app-id=/m.test(text)) return "Web Apps";
     const cats = (text.match(/^Categories=(.*)$/m)?.[1] ?? "").split(";");
     return SECTIONS.find(([cat]) => cats.includes(cat))?.[1] ?? OTHER;
-  } catch {
-    return OTHER;
   }
 }
 
@@ -106,8 +114,8 @@ export default function Command() {
 
   const load = async () => {
     const list = await getApplications();
-    const withSections = await Promise.all(list.map(async (app) => ({ ...app, section: await sectionOf(app) })));
-    setApps(withSections.sort((a, b) => a.name.localeCompare(b.name)));
+    const described = await Promise.all(list.map(describe));
+    setApps(described.filter((app) => !app.hidden).sort((a, b) => a.name.localeCompare(b.name)));
   };
   useEffect(() => {
     load();
