@@ -1,9 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=Installed Apps
+Name=Apps
 Comment=Browse every installed app in vicinae
 Exec=sh -c "\\$HOME/.config/hypr/scripts/Vicinae.sh vicinae://launch/system/browse-apps"
 Icon=installed-apps
 Terminal=false
 NoDisplay=false
 Categories=Utility;
+Keywords=installed;apps;aplicativos;instalados;
