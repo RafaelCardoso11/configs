@@ -5,12 +5,10 @@ import {
   Application,
   Grid,
   Icon,
-  Keyboard,
   Toast,
   closeMainWindow,
   confirmAlert,
   getApplications,
-  runInTerminal,
   showToast,
 } from "@vicinae/api";
 import { execFile, spawn } from "node:child_process";
@@ -81,7 +79,11 @@ async function owningPackage(desktopFile: string): Promise<string | undefined> {
 async function uninstall(app: Application, reload: () => void) {
   const pkg = await owningPackage(app.path);
   if (pkg) {
-    await runInTerminal(["sudo", "pacman", "-Rns", pkg], { hold: true, title: `Uninstall ${app.name}` });
+    // kitty directly: vicinae's runInTerminal depends on a default-terminal setting that is disabled here
+    spawn("kitty", ["--hold", "--title", `Uninstall ${app.name}`, "sudo", "pacman", "-Rns", pkg], {
+      detached: true,
+      stdio: "ignore",
+    }).unref();
     closeMainWindow();
     return;
   }
@@ -128,7 +130,8 @@ export default function Command() {
               key={app.id}
               title={app.name}
               keywords={[app.section]}
-              content={app.icon ? { source: app.icon, fallback: Icon.AppWindow } : Icon.AppWindow}
+              // the grid cuts long titles; the tooltip shows the full name on hover
+              content={{ value: app.icon ? { source: app.icon, fallback: Icon.AppWindow } : Icon.AppWindow, tooltip: app.name }}
               actions={
                 <ActionPanel>
                   <Action title="Open" icon={Icon.ArrowRight} onAction={() => launch(app)} />
@@ -136,7 +139,7 @@ export default function Command() {
                     title="Uninstall"
                     icon={Icon.Trash}
                     style="destructive"
-                    shortcut={Keyboard.Shortcut.Common.Remove}
+                    shortcut={{ modifiers: ["ctrl"], key: "delete" }}
                     onAction={() => uninstall(app, load)}
                   />
                 </ActionPanel>
