@@ -11,6 +11,7 @@ local UserScripts = HOME .. "/.config/hypr/UserScripts"
 
 hl.bind(mainMod .. " + Q", hl.dsp.window.close(), { description = "close active (not kill)" })
 hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd(scriptsDir .. "/LockScreen.sh"), { description = "screen lock" })
+hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd(scriptsDir .. "/Vicinae.sh vicinae://launch/scripts"), { description = "Arch menu (power, about, settings)" })
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t -sw"), { description = "swayNC notification panel" })
 
 -- Master Layout
