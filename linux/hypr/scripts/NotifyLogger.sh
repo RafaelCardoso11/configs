@@ -1,6 +1,6 @@
 #!/bin/bash
 # Logs every desktop notification to ~/.cache/notify-history (one line each),
-# read back by NotifyHistory.sh. Started once from Startup_Apps.conf.
+# read back by NotifyHistory.sh. Started once from Startup_Apps.lua.
 
 log="$HOME/.cache/notify-history"
 

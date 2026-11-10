@@ -1,8 +1,8 @@
 #!/bin/bash
-# This file used on waybar modules sourcing defaults set in $HOME/.config/hypr/UserConfigs/01-UserDefaults.conf
+# This file used on waybar modules sourcing defaults set in $HOME/.config/hypr/UserConfigs/01-UserDefaults.lua
 
 # Define the path to the config file
-config_file=$HOME/.config/hypr/UserConfigs/01-UserDefaults.conf
+config_file=$HOME/.config/hypr/UserConfigs/01-UserDefaults.lua
 
 # Check if the config file exists
 if [[ ! -f "$config_file" ]]; then
@@ -10,11 +10,7 @@ if [[ ! -f "$config_file" ]]; then
     exit 1
 fi
 
-# Process the config file in memory, removing the $ and fixing spaces
-config_content=$(sed 's/\$//g' "$config_file" | sed 's/ = /=/')
-
-# Source the modified content directly from the variable
-eval "$config_content"
+term=$(sed -nE 's/^local term = "([^"]*)".*/\1/p' "$config_file")
 
 # Check if $term is set correctly
 if [[ -z "$term" ]]; then

@@ -111,25 +111,16 @@ set_sddm_wallpaper() {
 
 modify_startup_config() {
   local selected_file="$1"
-  local startup_config="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
+  local startup_config="$HOME/.config/hypr/UserConfigs/Startup_Apps.lua"
 
-  # Check if it's a live wallpaper (video)
+  # Startup_Apps.lua starts mpvpaper when livewallpaper is set, swww-daemon when it is empty
   if [[ "$selected_file" =~ \.(mp4|mkv|mov|webm)$ ]]; then
-    # For video wallpapers:
-    sed -i '/^\s*exec-once\s*=\s*swww-daemon\s*--format\s*xrgb\s*$/s/^/\#/' "$startup_config"
-    sed -i '/^\s*#\s*exec-once\s*=\s*mpvpaper\s*.*$/s/^#\s*//;' "$startup_config"
-
-    # Update the livewallpaper variable with the selected video path (using $HOME)
-    selected_file="${selected_file/#$HOME/\$HOME}" # Replace /home/user with $HOME
-    sed -i "s|^\$livewallpaper=.*|\$livewallpaper=\"$selected_file\"|" "$startup_config"
-
+    # Lua long string: the path is written verbatim, no escaping needed
+    LW="$selected_file" awk '/^local livewallpaper = /{ print "local livewallpaper = [==[" ENVIRON["LW"] "]==]"; next } 1' \
+      "$startup_config" > "$startup_config.tmp" && mv "$startup_config.tmp" "$startup_config"
     echo "Configured for live wallpaper (video)."
   else
-    # For image wallpapers:
-    sed -i '/^\s*#\s*exec-once\s*=\s*swww-daemon\s*--format\s*xrgb\s*$/s/^\s*#\s*//;' "$startup_config"
-
-    sed -i '/^\s*exec-once\s*=\s*mpvpaper\s*.*$/s/^/\#/' "$startup_config"
-
+    sed -i 's|^local livewallpaper = .*|local livewallpaper = ""|' "$startup_config"
     echo "Configured for static wallpaper (image)."
   fi
 }
@@ -190,7 +181,7 @@ main() {
     exit 1
   fi
 
-  # Modify the Startup_Apps.conf file based on wallpaper type
+  # Modify the Startup_Apps.lua file based on wallpaper type
   modify_startup_config "$selected_file"
 
   # **CHECK FIRST** if it's a video or an image **before calling any function**

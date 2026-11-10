@@ -2,7 +2,7 @@
 # Makes the whole desktop follow the theme picked in vicinae ("Set Theme"):
 # the matching wallust colorscheme is applied to waybar, kitty, hyprland borders,
 # swaync, rofi, etc. Picking the "wallust" theme goes back to wallpaper colors.
-# Started once from Startup_Apps.conf.
+# Started once from Startup_Apps.lua.
 
 settings="$HOME/.config/vicinae/settings.json"
 scriptsDir="$HOME/.config/hypr/scripts"
