@@ -18,6 +18,7 @@
     {
       "name": "grid",
       "title": "Apps",
+      "subtitle": "Arch",
       "description": "Browse installed apps as a grid and open one",
       "keywords": [
         "apps",
