@@ -2,7 +2,7 @@
 Type=Application
 Name=Downloads
 Comment=Open the Downloads folder in Files
-Exec=sh -c 'nautilus --new-window "$(xdg-user-dir DOWNLOAD)"'
+Exec=sh -c "nautilus --new-window \\"\\$(xdg-user-dir DOWNLOAD)\\""
 Icon=folder-downloads
 Terminal=false
 Categories=Utility;
