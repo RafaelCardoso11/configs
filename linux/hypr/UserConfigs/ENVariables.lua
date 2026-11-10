@@ -34,9 +34,8 @@ hl.env("QT_QUICK_CONTROLS_STYLE", "org.hyprland.style")
 hl.env("GDK_SCALE", "1")
 hl.env("QT_SCALE_FACTOR", "1")
 
--- Bibata-Modern-Ice-Cursor
--- NOTE! You must have the hyprcursor version to activate this.
--- https://wiki.hyprland.org/Hypr-Ecosystem/hyprcursor/
+-- macOS cursor (apple_cursor). It ships only as XCursor, so Hyprland falls back
+-- from HYPRCURSOR_THEME to XCURSOR_THEME and both end up showing the same cursor.
 hl.env("HYPRCURSOR_THEME", "macOS")
 hl.env("XCURSOR_THEME", "macOS")
 hl.env("HYPRCURSOR_SIZE", "24")
