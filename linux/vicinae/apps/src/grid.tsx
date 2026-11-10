@@ -14,7 +14,7 @@ import {
   showToast,
 } from "@vicinae/api";
 import { execFile, spawn } from "node:child_process";
-import { realpath, unlink } from "node:fs/promises";
+import { readFile, realpath, unlink } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { promisify } from "node:util";
@@ -22,6 +22,38 @@ import { useEffect, useState } from "react";
 
 const run = promisify(execFile);
 const LOCAL_APPS = join(homedir(), ".local/share/applications");
+
+// freedesktop main categories, in the order a multi-category app is resolved
+const SECTIONS: [string, string][] = [
+  ["Development", "Development"],
+  ["Game", "Games"],
+  ["Graphics", "Graphics"],
+  ["AudioVideo", "Media"],
+  ["Audio", "Media"],
+  ["Video", "Media"],
+  ["Office", "Office"],
+  ["Education", "Education"],
+  ["Science", "Science"],
+  ["Network", "Internet"],
+  ["Settings", "Settings"],
+  ["System", "System"],
+  ["Utility", "Utilities"],
+];
+const OTHER = "Other";
+
+type App = Application & { section: string };
+
+async function sectionOf(app: Application): Promise<string> {
+  try {
+    const text = await readFile(app.path, "utf8");
+    // browser-installed web apps (Brave/Chrome "Install app") carry no Categories, only --app-id
+    if (/^Exec=.*--app-id=/m.test(text)) return "Web Apps";
+    const cats = (text.match(/^Categories=(.*)$/m)?.[1] ?? "").split(";");
+    return SECTIONS.find(([cat]) => cats.includes(cat))?.[1] ?? OTHER;
+  } catch {
+    return OTHER;
+  }
+}
 
 function launch(app: Application) {
   // path is the app's .desktop file; gio runs it with its Exec line, detached from vicinae
@@ -62,34 +94,50 @@ async function uninstall(app: Application, reload: () => void) {
   await showToast({ style: Toast.Style.Failure, title: "Can't uninstall", message: "Not owned by any pacman package" });
 }
 
-export default function Command() {
-  const [apps, setApps] = useState<Application[]>();
+// alphabetical sections, "Other" last
+function sections(apps: App[] = []): [string, App[]][] {
+  const map = new Map<string, App[]>();
+  for (const app of apps) map.set(app.section, [...(map.get(app.section) ?? []), app]);
+  return [...map].sort(([a], [b]) => (a === OTHER ? 1 : b === OTHER ? -1 : a.localeCompare(b)));
+}
 
-  const load = () => getApplications().then((list) => setApps([...list].sort((a, b) => a.name.localeCompare(b.name))));
+export default function Command() {
+  const [apps, setApps] = useState<App[]>();
+
+  const load = async () => {
+    const list = await getApplications();
+    const withSections = await Promise.all(list.map(async (app) => ({ ...app, section: await sectionOf(app) })));
+    setApps(withSections.sort((a, b) => a.name.localeCompare(b.name)));
+  };
   useEffect(() => {
     load();
   }, []);
 
   return (
     <Grid columns={7} aspectRatio="1" fit={Grid.Fit.Contain} inset={Grid.Inset.Medium} isLoading={!apps} searchBarPlaceholder="Search apps...">
-      {apps?.map((app) => (
-        <Grid.Item
-          key={app.id}
-          title={app.name}
-          content={app.icon ? { source: app.icon, fallback: Icon.AppWindow } : Icon.AppWindow}
-          actions={
-            <ActionPanel>
-              <Action title="Open" icon={Icon.ArrowRight} onAction={() => launch(app)} />
-              <Action
-                title="Uninstall"
-                icon={Icon.Trash}
-                style="destructive"
-                shortcut={Keyboard.Shortcut.Common.Remove}
-                onAction={() => uninstall(app, load)}
-              />
-            </ActionPanel>
-          }
-        />
+      {sections(apps).map(([title, items]) => (
+        <Grid.Section key={title} title={title} subtitle={String(items.length)}>
+          {items.map((app) => (
+            <Grid.Item
+              key={app.id}
+              title={app.name}
+              keywords={[app.section]}
+              content={app.icon ? { source: app.icon, fallback: Icon.AppWindow } : Icon.AppWindow}
+              actions={
+                <ActionPanel>
+                  <Action title="Open" icon={Icon.ArrowRight} onAction={() => launch(app)} />
+                  <Action
+                    title="Uninstall"
+                    icon={Icon.Trash}
+                    style="destructive"
+                    shortcut={Keyboard.Shortcut.Common.Remove}
+                    onAction={() => uninstall(app, load)}
+                  />
+                </ActionPanel>
+              }
+            />
+          ))}
+        </Grid.Section>
       ))}
     </Grid>
   );
