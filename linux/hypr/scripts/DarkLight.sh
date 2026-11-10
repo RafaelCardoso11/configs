@@ -120,82 +120,8 @@ kvantummanager --set "$kvantum_theme"
 
 
 
-# GTK themes and icons switching
-set_custom_gtk_theme() {
-    mode=$1
-    gtk_themes_directory="$HOME/.themes"
-    icon_directory="$HOME/.icons"
-    color_setting="org.gnome.desktop.interface color-scheme"
-    theme_setting="org.gnome.desktop.interface gtk-theme"
-    icon_setting="org.gnome.desktop.interface icon-theme"
-
-    if [ "$mode" == "Light" ]; then
-        search_keywords="*Light*"
-        gsettings set $color_setting 'prefer-light'
-    elif [ "$mode" == "Dark" ]; then
-        search_keywords="*Dark*"
-        gsettings set $color_setting 'prefer-dark'
-    else
-        echo "Invalid mode provided."
-        return 1
-    fi
-
-    themes=()
-    icons=()
-
-    while IFS= read -r -d '' theme_search; do
-        themes+=("$(basename "$theme_search")")
-    done < <(find "$gtk_themes_directory" -maxdepth 1 -type d -iname "$search_keywords" -print0)
-
-    while IFS= read -r -d '' icon_search; do
-        icons+=("$(basename "$icon_search")")
-    done < <(find "$icon_directory" -maxdepth 1 -type d -iname "$search_keywords" -print0)
-
-    if [ ${#themes[@]} -gt 0 ]; then
-        if [ "$mode" == "Dark" ]; then
-            selected_theme=${themes[RANDOM % ${#themes[@]}]}
-        else
-            selected_theme=${themes[$RANDOM % ${#themes[@]}]}
-        fi
-        echo "Selected GTK theme for $mode mode: $selected_theme"
-        gsettings set $theme_setting "$selected_theme"
-
-        # Flatpak GTK apps (themes)
-        if command -v flatpak &> /dev/null; then
-            flatpak --user override --filesystem=$HOME/.themes
-            sleep 0.5
-            flatpak --user override --env=GTK_THEME="$selected_theme"
-        fi
-    else
-        echo "No $mode GTK theme found"
-    fi
-
-    if [ ${#icons[@]} -gt 0 ]; then
-        if [ "$mode" == "Dark" ]; then
-            selected_icon=${icons[RANDOM % ${#icons[@]}]}
-        else
-            selected_icon=${icons[$RANDOM % ${#icons[@]}]}
-        fi
-        echo "Selected icon theme for $mode mode: $selected_icon"
-        gsettings set $icon_setting "$selected_icon"
-        
-        ## QT5ct icon_theme
-        sed -i "s|^icon_theme=.*$|icon_theme=$selected_icon|" "$HOME/.config/qt5ct/qt5ct.conf"
-        sed -i "s|^icon_theme=.*$|icon_theme=$selected_icon|" "$HOME/.config/qt6ct/qt6ct.conf"
-
-        # Flatpak GTK apps (icons)
-        if command -v flatpak &> /dev/null; then
-            flatpak --user override --filesystem=$HOME/.icons
-            sleep 0.5
-            flatpak --user override --env=ICON_THEME="$selected_icon"
-        fi
-    else
-        echo "No $mode icon theme found"
-    fi
-}
-
-# Call the function to set GTK theme and icon theme based on mode
-set_custom_gtk_theme "$next_mode"
+# GTK + icon theme (WhiteSur light/dark)
+"$SCRIPTSDIR/GtkTheme.sh" "$next_mode"
 
 # Update theme mode for the next cycle
 update_theme_mode
