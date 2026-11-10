@@ -5,7 +5,7 @@ if [ -f "${XDG_RUNTIME_DIR:-/tmp}/hypr-presentation" ]; then
   exit 0
 fi
 
-# This script for selecting wallpapers (SUPER W)
+# Applies the wallpaper given as $1 (picked in the vicinae "Select Wallpaper" grid, SUPER W)
 
 # WALLPAPERS PATH
 terminal=kitty
@@ -58,21 +58,6 @@ kill_wallpaper_for_image() {
   pkill mpvpaper 2>/dev/null
   pkill swaybg 2>/dev/null
   pkill hyprpaper 2>/dev/null
-}
-
-# Retrieve wallpapers (both images & videos)
-mapfile -d '' PICS < <(find -L "${wallDIR}" -type f \( \
-  -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o \
-  -iname "*.bmp" -o -iname "*.tiff" -o -iname "*.webp" -o \
-  -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.mov" -o -iname "*.webm" \) -print0)
-
-RANDOM_PIC="${PICS[$((RANDOM % ${#PICS[@]}))]}"
-RANDOM_PIC_NAME="Random wallpaper"
-
-# Full paths let vicinae quick look preview each wallpaper
-menu() {
-  echo "$RANDOM_PIC_NAME"
-  printf "%s\n" "${PICS[@]}" | sort
 }
 
 # Offer SDDM Sequioa Wallpaper Option (only for non-video wallpapers)
@@ -163,21 +148,10 @@ apply_video_wallpaper() {
 
 # Main function
 main() {
-  choice=$(menu | vicinae dmenu -n "Wallpapers" -p "Search wallpapers..." --no-section --no-metadata)
-
-  if [[ -z "$choice" ]]; then
-    echo "No choice selected. Exiting."
-    exit 0
-  fi
-
-  if [[ "$choice" == "$RANDOM_PIC_NAME" ]]; then
-    selected_file="$RANDOM_PIC"
-  else
-    selected_file="$choice"
-  fi
+  selected_file="$1"
 
   if [[ ! -f "$selected_file" ]]; then
-    echo "File not found. Selected choice: $choice"
+    notify-send -i "$iDIR/error.png" "Wallpaper not found" "$selected_file"
     exit 1
   fi
 
@@ -192,5 +166,5 @@ main() {
   fi
 }
 
-main
+main "$1"
 

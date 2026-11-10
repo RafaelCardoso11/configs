@@ -9,8 +9,8 @@ current=$(hyprctl activeworkspace -j | jq -r .name)
 
 if [[ $current == scratch ]]; then
   target=$(cat "$state" 2>/dev/null)
-  hyprctl dispatch focusworkspaceoncurrentmonitor "${target:-1}" >/dev/null
+  hyprctl dispatch "hl.dsp.focus({ workspace = \"${target:-1}\", on_current_monitor = true })" >/dev/null
 else
   echo "$current" > "$state"
-  hyprctl dispatch focusworkspaceoncurrentmonitor name:scratch >/dev/null
+  hyprctl dispatch 'hl.dsp.focus({ workspace = "name:scratch", on_current_monitor = true })' >/dev/null
 fi

@@ -39,7 +39,8 @@ hl.animation({
     enabled = true,
     speed = 3.5,
     bezier = "easeOutExpo",
-    style = "slide",
+    -- vertical: with one workspace per monitor this only animates the scratch, and a sideways slide reads as moving to another monitor
+    style = "slidevert",
 })
 hl.animation({
     leaf = "specialWorkspace",

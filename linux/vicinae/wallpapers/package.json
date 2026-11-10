@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/vicinaehq/vicinae/refs/heads/main/extra/schemas/extension.json",
+  "name": "wallpapers",
+  "title": "Wallpapers",
+  "description": "Thumbnail grid to pick the desktop wallpaper",
+  "categories": ["System"],
+  "license": "MIT",
+  "platforms": ["Linux"],
+  "author": "lawdwater",
+  "contributors": [],
+  "pastContributors": [],
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "select",
+      "title": "Select Wallpaper",
+      "subtitle": "Wallpapers",
+      "description": "Browse wallpapers as a grid and apply one",
+      "keywords": ["wallpaper", "papel de parede", "background"],
+      "mode": "view"
+    }
+  ],
+  "preferences": [],
+  "scripts": {
+    "build": "vici build",
+    "dev": "vici develop"
+  },
+  "dependencies": {
+    "@vicinae/api": "^0.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.9.2"
+  }
+}

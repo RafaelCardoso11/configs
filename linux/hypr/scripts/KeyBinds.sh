@@ -4,8 +4,8 @@
 # the per-number workspace binds are left out and summarized instead.
 
 {
-  printf '%-28s %s\n' "SUPER + 1..0" "go to workspace" \
-                      "SUPER + SHIFT + 1..0" "move window to workspace"
+  printf '%-28s %s\n' "SUPER + 1..3" "go to workspace" \
+                      "SUPER + SHIFT + 1..3" "move window to workspace"
   hyprctl binds -j | jq -r '
     def bit($n): (.modmask / $n | floor) % 2 == 1;
     .[]

@@ -14,7 +14,6 @@ swaync_style="$HOME/.config/swaync/style.css"
 ags_style="$HOME/.config/ags/user/style.css"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 notif="$HOME/.config/swaync/images/bell.png"
-wallust_rofi="$HOME/.config/wallust/templates/colors-rofi.rasi"
 
 kitty_conf="$HOME/.config/kitty/kitty.conf"
 
@@ -23,7 +22,7 @@ pallete_dark="dark16"
 pallete_light="light16"
 
 # intial kill process
-for pid in waybar rofi swaync ags swaybg; do
+for pid in waybar swaync ags swaybg; do
     killall -SIGUSR1 "$pid"
 done
 
@@ -59,25 +58,6 @@ else
     sed -i 's/^palette = .*/palette = "'"$pallete_light"'"/' "$wallust_config" 
 fi
 
-# Function to set Waybar style
-set_waybar_style() {
-    theme="$1"
-    waybar_styles="$HOME/.config/waybar/style"
-    waybar_style_link="$HOME/.config/waybar/style.css"
-    style_prefix="\\[${theme}\\].*\\.css$"
-
-    style_file=$(find -L "$waybar_styles" -maxdepth 1 -type f -regex ".*$style_prefix" | shuf -n 1)
-
-    if [ -n "$style_file" ]; then
-        ln -sf "$style_file" "$waybar_style_link"
-    else
-        echo "Style file not found for $theme theme."
-    fi
-}
-
-# Call the function after determining the mode
-# the macOS bar keeps fixed colors, so its style is not swapped here
-# set_waybar_style "$next_mode"
 notify_user "$next_mode"
 
 
@@ -153,12 +133,6 @@ sed -i "s|^color_scheme_path=.*$|color_scheme_path=$qt6ct_color_scheme|" "$HOME/
 kvantummanager --set "$kvantum_theme"
 
 
-# set the rofi color for background
-if [ "$next_mode" = "Dark" ]; then
-    sed -i '/^background:/s/.*/background: rgba(0,0,0,0.7);/' $wallust_rofi
-else
-    sed -i '/^background:/s/.*/background: rgba(255,255,255,0.9);/' $wallust_rofi
-fi
 
 
 # GTK themes and icons switching
@@ -246,7 +220,7 @@ ${SCRIPTSDIR}/WallustSwww.sh &&
 
 sleep 2
 # kill process
-for pid1 in waybar rofi swaync ags swaybg; do
+for pid1 in waybar swaync ags swaybg; do
     killall "$pid1"
 done
 

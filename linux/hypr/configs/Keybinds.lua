@@ -80,31 +80,17 @@ hl.bind(mainMod .. " + minus", hl.dsp.workspace.toggle_special("scratchpad"), { 
 
 -- The following mappings use the key codes to better support various keyboard layouts
 -- 1 is code:10, 2 is code 11, etc
--- Switch workspaces with mainMod + [0-9] 
+-- Switch workspaces with mainMod + [1-3]
 hl.bind(mainMod .. " + code:10", hl.dsp.focus({ workspace = 1 }), { description = "NOTE: code:10 = key 1" })
 hl.bind(mainMod .. " + code:11", hl.dsp.focus({ workspace = 2 }), { description = "NOTE: code:11 = key 2" })
 hl.bind(mainMod .. " + code:12", hl.dsp.focus({ workspace = 3 }), { description = "NOTE: code:12 = key 3" })
-hl.bind(mainMod .. " + code:13", hl.dsp.focus({ workspace = 4 }), { description = "NOTE: code:13 = key 4" })
-hl.bind(mainMod .. " + code:14", hl.dsp.focus({ workspace = 5 }), { description = "NOTE: code:14 = key 5" })
-hl.bind(mainMod .. " + code:15", hl.dsp.focus({ workspace = 6 }), { description = "NOTE: code:15 = key 6" })
-hl.bind(mainMod .. " + code:16", hl.dsp.focus({ workspace = 7 }), { description = "NOTE: code:16 = key 7" })
-hl.bind(mainMod .. " + code:17", hl.dsp.focus({ workspace = 8 }), { description = "NOTE: code:17 = key 8" })
-hl.bind(mainMod .. " + code:18", hl.dsp.focus({ workspace = 9 }), { description = "NOTE: code:18 = key 9" })
-hl.bind(mainMod .. " + code:19", hl.dsp.focus({ workspace = 10 }), { description = "NOTE: code:19 = key 0" })
 
--- Move active window and follow to workspace mainMod + SHIFT [0-9]
+-- Move active window and follow to workspace mainMod + SHIFT [1-3]
 hl.bind(mainMod .. " + SHIFT + code:10", hl.dsp.window.move({ workspace = 1 }), { description = "NOTE: code:10 = key 1" })
 hl.bind(mainMod .. " + SHIFT + code:11", hl.dsp.window.move({ workspace = 2 }), { description = "NOTE: code:11 = key 2" })
 hl.bind(mainMod .. " + SHIFT + code:12", hl.dsp.window.move({ workspace = 3 }), { description = "NOTE: code:12 = key 3" })
-hl.bind(mainMod .. " + SHIFT + code:13", hl.dsp.window.move({ workspace = 4 }), { description = "NOTE: code:13 = key 4" })
-hl.bind(mainMod .. " + SHIFT + code:14", hl.dsp.window.move({ workspace = 5 }), { description = "NOTE: code:14 = key 5" })
-hl.bind(mainMod .. " + SHIFT + code:15", hl.dsp.window.move({ workspace = 6 }), { description = "NOTE: code:15 = key 6" })
-hl.bind(mainMod .. " + SHIFT + code:16", hl.dsp.window.move({ workspace = 7 }), { description = "NOTE: code:16 = key 7" })
-hl.bind(mainMod .. " + SHIFT + code:17", hl.dsp.window.move({ workspace = 8 }), { description = "NOTE: code:17 = key 8" })
-hl.bind(mainMod .. " + SHIFT + code:18", hl.dsp.window.move({ workspace = 9 }), { description = "NOTE: code:18 = key 9" })
-hl.bind(mainMod .. " + SHIFT + code:19", hl.dsp.window.move({ workspace = 10 }), { description = "NOTE: code:19 = key 0" })
-hl.bind(mainMod .. " + SHIFT + bracketleft", hl.dsp.window.move({ workspace = -1 }), { description = "brackets [" })
-hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.window.move({ workspace = "+1" }), { description = "brackets ]" })
+hl.bind(mainMod .. " + SHIFT + bracketleft", hl.dsp.window.move({ workspace = "e-1" }), { description = "brackets [" })
+hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.window.move({ workspace = "e+1" }), { description = "brackets ]" })
 
 -- Move active window to a workspace silently mainMod + CTRL [0-9]
 
