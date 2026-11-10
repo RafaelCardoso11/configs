@@ -9,24 +9,11 @@ local scriptsDir = HOME .. "/.config/hypr/scripts"
 local UserConfigs = HOME .. "/.config/hypr/UserConfigs"
 local UserScripts = HOME .. "/.config/hypr/UserScripts"
 
-hl.bind("CTRL + ALT + Delete", hl.dsp.exit(), { description = "exit Hyprland" })
 hl.bind(mainMod .. " + Q", hl.dsp.window.close(), { description = "close active (not kill)" })
 hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd(scriptsDir .. "/LockScreen.sh"), { description = "screen lock" })
-hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd("vicinae vicinae://launch/scripts"), { description = "Arch menu (power, about, settings)" })
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t -sw"), { description = "swayNC notification panel" })
 
 -- Master Layout
-
--- Dwindle Layout
-
--- Works on either layout (Master or Dwindle)
-hl.bind(mainMod .. " + M", hl.dsp.layout("splitratio 0.3"))
-
--- group
-
- -- Cycle windows if floating bring to top
-hl.bind("ALT + tab", hl.dsp.window.cycle_next({ next = true }))
-hl.bind("ALT + tab", hl.dsp.window.bring_to_top())
 
 -- Special Keys / Hot Keys
 hl.bind("xf86audioraisevolume", hl.dsp.exec_cmd(scriptsDir .. "/Volume.sh --inc"), { locked = true, repeating = true, description = "volume up" })

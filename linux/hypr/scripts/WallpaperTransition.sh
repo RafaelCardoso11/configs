@@ -3,7 +3,7 @@
 
 conf="$HOME/.config/hypr/wallpaper-transition"
 
-choice=$(cat <<'LIST' | vicinae dmenu -n "Wallpaper Transition" -p "Search transitions..." --no-section --no-quick-look
+choice=$(cat <<'LIST' | "$HOME/.config/hypr/scripts/Vicinae.sh" dmenu -n "Wallpaper Transition" -p "Search transitions..." --no-section --no-quick-look
 fade      smooth dissolve (macOS-like)
 simple    plain dissolve
 left      slide in from the left

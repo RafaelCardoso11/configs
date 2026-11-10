@@ -15,6 +15,7 @@ hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
 
 -- blur only the visible (rounded) part, not the transparent corners
 hl.layer_rule({ match = { namespace = "vicinae" }, blur = true, ignore_alpha = 0.3 })
+hl.layer_rule({ match = { namespace = "^swaync-(control-center|notification-window)$" }, blur = true, ignore_alpha = 0.3 })
 
 hl.window_rule({
     match = {

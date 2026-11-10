@@ -1,37 +1,15 @@
 #!/bin/bash
-# Scripts for refreshing ags, waybar, rofi, swaync, wallust
+# Restart waybar and reload swaync after a theme / wallpaper change.
+# Waits for the old bar to exit before starting a new one, so repeated calls never stack bars.
 
-SCRIPTSDIR=$HOME/.config/hypr/scripts
+pkill -x waybar
+while pgrep -x waybar >/dev/null; do sleep 0.1; done
+setsid waybar >/dev/null 2>&1 &
 
-
-# Kill already running processes
-_ps=(waybar swaync ags)
-for _prs in "${_ps[@]}"; do
-    if pidof "${_prs}" >/dev/null; then
-        pkill "${_prs}"
-    fi
-done
-
-# added since wallust sometimes not applying
-killall -SIGUSR2 waybar 
-
-# quit ags & relaunch ags
-ags -q && ags &
-
-# some process to kill
-for pid in $(pidof waybar swaync ags swaybg); do
-    kill -SIGUSR1 "$pid"
-done
-
-#Restart waybar
-sleep 1
-waybar &
-
-# relaunch swaync
-sleep 0.5
-swaync > /dev/null 2>&1 &
-# reload swaync
-swaync-client --reload-config
-
+if pgrep -x swaync >/dev/null; then
+    swaync-client --reload-config --reload-css >/dev/null 2>&1
+else
+    setsid swaync >/dev/null 2>&1 &
+fi
 
 exit 0

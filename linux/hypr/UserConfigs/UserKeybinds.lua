@@ -12,20 +12,15 @@ local term = "kitty"
 local scriptsDir = HOME .. "/.config/hypr/scripts"
 
 -- common shortcuts
---bindr = $mainMod, $mainMod_L, exec, pkill rofi || rofi -show drun -modi drun,filebrowser,run,window # Super Key to Launch rofi menu
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("vicinae toggle"), { description = "Main Menu (APP Launcher)" })
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("xdg-open \"https://\""), { description = "default browser" })
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(scriptsDir .. "/Vicinae.sh toggle"), { description = "Main Menu (APP Launcher)" })
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(term), { description = "terminal" })
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(files), { description = "file manager" })
 
 -- FEATURES / EXTRAS
-hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd(scriptsDir .. "/Refresh.sh"), { description = "Refresh waybar, swaync, rofi" })
-hl.bind("CTRL + ALT + E", hl.dsp.exec_cmd("vicinae vicinae://launch/core/search-emojis"), { description = "emoji menu" })
-hl.bind("CTRL + ALT + H", hl.dsp.exec_cmd("vicinae vicinae://launch/clipboard/history"), { description = "Clipboard Manager" })
-hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd(scriptsDir .. "/NotifyHistory.sh"), { description = "Notification history" })
+hl.bind("CTRL + ALT + H", hl.dsp.exec_cmd(scriptsDir .. "/Vicinae.sh vicinae://launch/clipboard/history"), { description = "Clipboard Manager" })
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(scriptsDir .. "/PresentationMode.sh"), { description = "screen-sharing mode (neutral wallpaper + DND)" })
-hl.bind(mainMod .. " + Tab", hl.dsp.exec_cmd("vicinae vicinae://launch/wm/switch-windows"), { description = "find any open window" })
-hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(scriptsDir .. "/WallpaperTransition.sh"), { description = "wallpaper transition" })
+hl.bind(mainMod .. " + Tab", hl.dsp.exec_cmd(scriptsDir .. "/Vicinae.sh vicinae://launch/wm/switch-windows"), { description = "find any open window" })
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.exec_cmd(scriptsDir .. "/KeyBinds.sh"), { description = "search keybinds via vicinae" })
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "whole full screen" })
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }), { description = "fake full screen" })
@@ -46,8 +41,7 @@ hl.bind(mainMod .. " + ALT + mouse_up", function() zoom(0.5) end)
 -- Waybar / Bar related
 
 -- FEATURES / EXTRAS (UserScripts)
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("vicinae vicinae://launch/@lawdwater/wallpapers/select"), { description = "Select wallpaper" })
-hl.bind(mainMod .. " + SHIFT + K", hl.dsp.exec_cmd(scriptsDir .. "/KeyBinds.sh"), { description = "search keybinds via vicinae" })
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(scriptsDir .. "/Vicinae.sh vicinae://launch/@lawdwater/wallpapers/select"), { description = "Select wallpaper" })
 
 -- For passthrough keyboard into a VM
 -- bind = $mainMod ALT, P, submap, passthru

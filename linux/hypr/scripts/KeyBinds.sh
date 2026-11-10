@@ -20,4 +20,4 @@
       as $keys
     | "\($keys | join(" + "))\t\(.description)"' |
     awk -F'\t' '{ printf "%-28s %s\n", $1, $2 }'
-} | vicinae dmenu -n "Keybinds" -p "Search keybinds..." --no-quick-look >/dev/null
+} | "$HOME/.config/hypr/scripts/Vicinae.sh" dmenu -n "Keybinds" -p "Search keybinds..." --no-quick-look >/dev/null
