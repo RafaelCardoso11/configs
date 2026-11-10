@@ -1,0 +1,377 @@
+// This configuration is merged with the default vicinae configuration file, which you can obtain by running the `vicinae config default` command.
+// Every item defined in this file takes precedence over the values defined in the default config or any other imported file.
+//
+// You can make manual edits to this file, however you should keep in mind that this file may be written to by vicinae when a configuration change is made through the GUI.
+// When that happens, any custom comments or formatting will be lost.
+//
+// If you want to maintain a configuration file with your own comments and formatting, you should create a separate file and add it to the 'imports' array.
+//
+// Learn more about configuration at https://docs.vicinae.com/config
+
+{
+   "$schema": "https://vicinae.com/schemas/config.json",
+   "close_on_focus_loss": false,
+   "pop_to_root_on_close": true,
+   "tray": {
+      "enabled": false
+   },
+   "font": {
+      "normal": {
+         "family": "Noto Sans",
+         "size": 12.5
+      }
+   },
+   "theme": {
+      "dark": {
+         "name": "vicinae-dark",
+         "icon_theme": "WhiteSur-dark"
+      }
+   },
+   "launcher_window": {
+      "opacity": 0.7,
+      "size": {
+         "width": 1120,
+         "height": 700
+      },
+      "compact_mode": {
+         "enabled": true
+      },
+      "material": "blur"
+   },
+   "fallbacks": [
+      "shortcuts:sct_google",
+      "files:search"
+   ],
+   "providers": {
+      "@c4n4m1/store.vicinae.zoxide-recent-directories": {
+         "preferences": {
+            "application": "nautilus",
+            "defaultFilter": "all"
+         }
+      },
+      "@dagimg-dot/store.vicinae.player-pilot": {
+         "preferences": {
+            "playerctl-players": "%any"
+         }
+      },
+      "@dagimg-dot/store.vicinae.wifi-commander": {
+         "preferences": {
+            "network-cli-tool": "nmcli"
+         }
+      },
+      "applications": {
+         "entrypoints": {
+            "assistant": {
+               "enabled": false
+            },
+            "avahi-discover": {
+               "enabled": false
+            },
+            "blueman-manager": {
+               "enabled": false
+            },
+            "brave-bopdkalaganggnmhikjgilipbfgocjfn-Default": {
+               "enabled": false
+            },
+            "brave-jlbglpicclbbgocfdcbpapililjjhhmn-Default": {
+               "enabled": false
+            },
+            "bssh": {
+               "enabled": false
+            },
+            "btop": {
+               "enabled": false
+            },
+            "bvnc": {
+               "enabled": false
+            },
+            "byobu": {
+               "enabled": false
+            },
+            "byobu_old": {
+               "enabled": false
+            },
+            "cups": {
+               "enabled": false
+            },
+            "designer": {
+               "enabled": false
+            },
+            "gparted": {
+               "enabled": false
+            },
+            "hp-uiscan": {
+               "enabled": false
+            },
+            "hplip": {
+               "enabled": false
+            },
+            "htop": {
+               "enabled": false
+            },
+            "jconsole-java-openjdk": {
+               "enabled": false
+            },
+            "jconsole-java17-openjdk": {
+               "enabled": false
+            },
+            "jconsole-java21-openjdk": {
+               "enabled": false
+            },
+            "jshell-java-openjdk": {
+               "enabled": false
+            },
+            "jshell-java17-openjdk": {
+               "enabled": false
+            },
+            "jshell-java21-openjdk": {
+               "enabled": false
+            },
+            "kvantummanager": {
+               "enabled": false
+            },
+            "lftp": {
+               "enabled": false
+            },
+            "libreoffice-base": {
+               "enabled": false
+            },
+            "libreoffice-draw": {
+               "enabled": false
+            },
+            "libreoffice-math": {
+               "enabled": false
+            },
+            "libreoffice-startcenter": {
+               "enabled": false
+            },
+            "linguist": {
+               "enabled": false
+            },
+            "lstopo": {
+               "enabled": false
+            },
+            "mpv": {
+               "enabled": false
+            },
+            "nm-connection-editor": {
+               "enabled": false
+            },
+            "nvidia-settings": {
+               "enabled": false
+            },
+            "nvim": {
+               "enabled": false
+            },
+            "nvtop": {
+               "enabled": false
+            },
+            "nwg-displays": {
+               "enabled": false
+            },
+            "nwg-look": {
+               "enabled": false
+            },
+            "org.gnome.Loupe": {
+               "enabled": false
+            },
+            "org.xfce.mousepad": {
+               "enabled": false
+            },
+            "qalculate-gtk": {
+               "enabled": false
+            },
+            "qdbusviewer": {
+               "enabled": false
+            },
+            "qt5ct": {
+               "enabled": false
+            },
+            "qt6ct": {
+               "enabled": false
+            },
+            "qv4l2": {
+               "enabled": false
+            },
+            "qvidcap": {
+               "enabled": false
+            },
+            "rofi": {
+               "enabled": false
+            },
+            "rofi-theme-selector": {
+               "enabled": false
+            },
+            "stoken-gui-small": {
+               "enabled": false
+            },
+            "system-config-printer": {
+               "enabled": false
+            },
+            "thunar-bulk-rename": {
+               "enabled": false
+            },
+            "thunar-settings": {
+               "enabled": false
+            },
+            "thunar-volman-settings": {
+               "enabled": false
+            },
+            "tuned-gui": {
+               "enabled": false
+            },
+            "ultravnc-viewer-listen": {
+               "enabled": false
+            },
+            "vicinae": {
+               "enabled": false
+            },
+            "vim": {
+               "enabled": false
+            },
+            "visualvm": {
+               "enabled": false
+            },
+            "xarchiver": {
+               "enabled": false
+            },
+            "xgps": {
+               "enabled": false
+            },
+            "xgpsspeed": {
+               "enabled": false
+            },
+            "yad-icon-browser": {
+               "enabled": false
+            },
+            "yad-settings": {
+               "enabled": false
+            }
+         }
+      },
+      "browser-extension": {
+         "enabled": false
+      },
+      "calculator": {
+         "preferences": {
+            "backend": "numen"
+         },
+         "entrypoints": {
+            "refresh-rates": {
+               "enabled": false
+            }
+         }
+      },
+      "clipboard": {
+         "entrypoints": {
+            "clear": {
+               "enabled": false
+            }
+         }
+      },
+      "core": {
+         "entrypoints": {
+            "forget-telemetry": {
+               "enabled": false
+            },
+            "inspect-local-storage": {
+               "enabled": false
+            },
+            "list-extensions": {
+               "enabled": false
+            },
+            "manage-fallback": {
+               "enabled": false
+            },
+            "oauth-token-store": {
+               "enabled": false
+            },
+            "open-config-file": {
+               "enabled": false
+            },
+            "open-default-config": {
+               "enabled": false
+            },
+            "refresh-apps": {
+               "enabled": false
+            },
+            "reload-scripts": {
+               "enabled": false
+            },
+            "report-bug": {
+               "enabled": false
+            },
+            "search-builtin-icons": {
+               "enabled": false
+            },
+            "search-tray": {
+               "enabled": false
+            },
+            "show-logs": {
+               "enabled": false
+            },
+            "sponsor": {
+               "enabled": false
+            }
+         }
+      },
+      "developer": {
+         "enabled": false
+      },
+      "font": {
+         "enabled": false
+      },
+      "media": {
+         "entrypoints": {
+            "toggle-mute": {
+               "enabled": false
+            },
+            "volume-0": {
+               "enabled": false
+            },
+            "volume-100": {
+               "enabled": false
+            },
+            "volume-25": {
+               "enabled": false
+            },
+            "volume-50": {
+               "enabled": false
+            },
+            "volume-75": {
+               "enabled": false
+            }
+         }
+      },
+      "power": {
+         "entrypoints": {
+            "hibernate": {
+               "enabled": false
+            },
+            "soft-reboot": {
+               "enabled": false
+            }
+         }
+      },
+      "system": {
+         "entrypoints": {
+            "set-default-browser": {
+               "enabled": false
+            },
+            "set-default-terminal": {
+               "enabled": false
+            }
+         }
+      },
+      "wm": {
+         "entrypoints": {
+            "toggle-floating": {
+               "enabled": false
+            },
+            "toggle-fullscreen": {
+               "enabled": false
+            }
+         }
+      }
+   }
+}

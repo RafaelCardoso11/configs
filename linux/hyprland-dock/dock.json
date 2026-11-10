@@ -1,0 +1,21 @@
+{
+  "iconSize": 54,
+  "magnification": 1.35,
+  "magnificationRadius": 120,
+  "margin": 10,
+  "backgroundOpacity": 0.88,
+  "position": "bottom",
+  "fullLength": false,
+  "reserveSpace": true,
+  "autoHide": true,
+  "clickAction": "focus-or-launch",
+  "pinned": [
+    "brave-browser",
+    "kitty",
+    "org.gnome.Nautilus",
+    "com.microsoft.VSCode",
+    "io.dbeaver.DBeaver",
+    "discord"
+  ],
+  "screen": "DP-3"
+}
