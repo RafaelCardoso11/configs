@@ -34,7 +34,7 @@ hl.config({
         --accel_profile =     # flat or adaptive or blank or EMPTY means libinput’s default mode
         numlock_by_default = true,
         left_handed = false,
-        follow_mouse = true,
+        follow_mouse = 2, -- 2: hover moves cursor focus only; keyboard focus changes on click (macOS-like, lets vicinae close on outside click)
         float_switch_override_focus = false,
         touchpad = {
             disable_while_typing = true,
