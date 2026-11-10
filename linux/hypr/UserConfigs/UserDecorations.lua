@@ -23,31 +23,36 @@ hl.window_rule({
     opacity = "0.9 0.85",
 })
 
+-- apps like kitty request maximize on open; keep them tiled
+hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
+
+
 hl.config({
     general = {
         border_size = 1,
-        gaps_in = 2,
-        gaps_out = 0,
+        gaps_in = 8,
+        gaps_out = 20,
         col = {
-            active_border = color15,
-            inactive_border = color10,
+            active_border = "rgba(ffffff40)",
+            inactive_border = "rgba(ffffff1a)",
         },
     },
     decoration = {
-        rounding = 0,
+        rounding = 16,
+        rounding_power = 4.0,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
         dim_inactive = true,
         dim_strength = 0,
         dim_special = 0.2,
-        -- shadow {
-        --   enabled = false
-        --   range = 3
-        --   render_power = 1
-        --   color =  $color12
-        --   color_inactive = $color10
-        -- }
+        shadow = {
+            enabled = true,
+            range = 25,
+            render_power = 3,
+            color = "rgba(00000066)",
+            color_inactive = "rgba(00000033)",
+        },
         blur = {
             enabled = true,
             size = 10,
@@ -73,3 +78,6 @@ hl.config({
     -- VS Code: translucent with blur behind, a bit more when unfocused
 })
 
+
+-- satty annotation editor opens over the current layout instead of tiling into it
+hl.window_rule({ match = { class = "^(com\\.gabm\\.satty)$" }, float = true, center = true })

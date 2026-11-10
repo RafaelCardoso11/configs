@@ -11,7 +11,6 @@ local UserScripts = HOME .. "/.config/hypr/UserScripts"
 
 hl.bind("CTRL + ALT + Delete", hl.dsp.exit(), { description = "exit Hyprland" })
 hl.bind(mainMod .. " + Q", hl.dsp.window.close(), { description = "close active (not kill)" })
-hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd(scriptsDir .. "/KillActiveProcess.sh"), { description = "Kill active process" })
 hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd(scriptsDir .. "/LockScreen.sh"), { description = "screen lock" })
 hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd("vicinae vicinae://launch/scripts"), { description = "Arch menu (power, about, settings)" })
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t -sw"), { description = "swayNC notification panel" })
@@ -44,11 +43,8 @@ hl.bind("xf86AudioNext", hl.dsp.exec_cmd(scriptsDir .. "/MediaCtrl.sh --nxt"), {
 hl.bind("xf86AudioPrev", hl.dsp.exec_cmd(scriptsDir .. "/MediaCtrl.sh --prv"), { locked = true })
 hl.bind("xf86audiostop", hl.dsp.exec_cmd(scriptsDir .. "/MediaCtrl.sh --stop"), { locked = true })
 
--- Screenshot keybindings NOTE: You may need to press Fn key as well
-hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --now"), { description = "screenshot" })
-hl.bind(mainMod .. " + SHIFT + F12", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --area"), { description = "screenshot (área)" })
--- screenshot with swappy (another screenshot tool)
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --swappy"), { description = "screenshot (swappy)" })
+-- screenshot with satty (annotate, copy, save)
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | satty --filename - --copy-command wl-copy --output-filename ~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png --actions-on-enter save-to-clipboard,exit --early-exit copy]]), { description = "screenshot (satty)" })
 
 -- Resize windows
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
