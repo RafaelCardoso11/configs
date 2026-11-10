@@ -55,12 +55,10 @@ async function describe(app: Application): Promise<App> {
 }
 
 function sectionFromDesktop(text: string): string {
-  {
-    // browser-installed web apps (Brave/Chrome "Install app") carry no Categories, only --app-id
-    if (/^Exec=.*--app-id=/m.test(text)) return "Web Apps";
-    const cats = (text.match(/^Categories=(.*)$/m)?.[1] ?? "").split(";");
-    return SECTIONS.find(([cat]) => cats.includes(cat))?.[1] ?? OTHER;
-  }
+  // browser-installed web apps (Brave/Chrome "Install app") carry no Categories, only --app-id
+  if (/^Exec=.*--app-id=/m.test(text)) return "Web Apps";
+  const cats = (text.match(/^Categories=(.*)$/m)?.[1] ?? "").split(";");
+  return SECTIONS.find(([cat]) => cats.includes(cat))?.[1] ?? OTHER;
 }
 
 function launch(app: Application) {
