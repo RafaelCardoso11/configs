@@ -10,11 +10,13 @@
   "autoHide": true,
   "clickAction": "focus-or-launch",
   "pinned": [
+    "installed-apps",
     "brave-browser",
     "kitty",
     "org.gnome.Nautilus",
     "com.microsoft.VSCode",
     "io.dbeaver.DBeaver",
+    "oracle-sqldeveloper",
     "discord",
     "downloads",
     "trash"
