@@ -15,7 +15,9 @@
     "org.gnome.Nautilus",
     "com.microsoft.VSCode",
     "io.dbeaver.DBeaver",
-    "discord"
+    "discord",
+    "downloads",
+    "trash"
   ],
   "screen": "DP-3"
 }

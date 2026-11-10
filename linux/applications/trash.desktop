@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Trash
+Comment=Open the trash in Files
+Exec=nautilus --new-window trash:///
+Icon=user-trash
+Terminal=false
+Categories=Utility;
+Keywords=trash;lixeira;bin;
