@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=Apps
-Comment=Browse every installed app in vicinae
-Exec=sh -c "\\$HOME/.config/hypr/scripts/Vicinae.sh vicinae://launch/system/browse-apps"
+Comment=Installed apps as a grid (vicinae)
+Exec=sh -c "\\$HOME/.config/hypr/scripts/Vicinae.sh vicinae://launch/@lawdwater/apps/grid"
 Icon=apps-grid
 Terminal=false
 NoDisplay=false
