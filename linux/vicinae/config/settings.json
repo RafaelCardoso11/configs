@@ -73,9 +73,6 @@
             "avahi-discover": {
                "enabled": false
             },
-            "blueman-manager": {
-               "enabled": false
-            },
             "brave-bopdkalaganggnmhikjgilipbfgocjfn-Default": {
                "enabled": false
             },
