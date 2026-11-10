@@ -208,15 +208,6 @@
             "system-config-printer": {
                "enabled": false
             },
-            "thunar-bulk-rename": {
-               "enabled": false
-            },
-            "thunar-settings": {
-               "enabled": false
-            },
-            "thunar-volman-settings": {
-               "enabled": false
-            },
             "tuned-gui": {
                "enabled": false
             },
