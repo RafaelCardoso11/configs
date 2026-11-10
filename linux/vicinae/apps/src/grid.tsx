@@ -111,6 +111,7 @@ function sections(apps: App[] = []): [string, App[]][] {
 
 export default function Command() {
   const [apps, setApps] = useState<App[]>();
+  const [selected, setSelected] = useState<string>();
 
   const load = async () => {
     const list = await getApplications();
@@ -122,12 +123,23 @@ export default function Command() {
   }, []);
 
   return (
-    <Grid columns={7} aspectRatio="1" fit={Grid.Fit.Contain} inset={Grid.Inset.Medium} isLoading={!apps} searchBarPlaceholder="Search apps...">
+    <Grid
+      columns={7}
+      aspectRatio="1"
+      fit={Grid.Fit.Contain}
+      inset={Grid.Inset.Medium}
+      isLoading={!apps}
+      searchBarPlaceholder="Search apps..."
+      // full name of the selected app in the footer, since grid titles get cut
+      navigationTitle={apps?.find((app) => app.id === selected)?.name ?? "Apps"}
+      onSelectionChange={setSelected}
+    >
       {sections(apps).map(([title, items]) => (
         <Grid.Section key={title} title={title} subtitle={String(items.length)}>
           {items.map((app) => (
             <Grid.Item
               key={app.id}
+              id={app.id}
               title={app.name}
               keywords={[app.section]}
               // the grid cuts long titles; the tooltip shows the full name on hover
