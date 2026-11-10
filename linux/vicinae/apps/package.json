@@ -3,9 +3,13 @@
   "name": "apps",
   "title": "Apps",
   "description": "Installed apps as an icon grid",
-  "categories": ["System"],
+  "categories": [
+    "System"
+  ],
   "license": "MIT",
-  "platforms": ["Linux"],
+  "platforms": [
+    "Linux"
+  ],
   "author": "lawdwater",
   "contributors": [],
   "pastContributors": [],
@@ -14,9 +18,14 @@
     {
       "name": "grid",
       "title": "Apps",
-      "subtitle": "Apps",
       "description": "Browse installed apps as a grid and open one",
-      "keywords": ["apps", "installed", "aplicativos", "instalados", "launcher"],
+      "keywords": [
+        "apps",
+        "installed",
+        "aplicativos",
+        "instalados",
+        "launcher"
+      ],
       "mode": "view"
     }
   ],
