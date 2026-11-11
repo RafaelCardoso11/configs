@@ -11,7 +11,6 @@
 hl.config({
     dwindle = {
         preserve_split = true,
-        special_scale_factor = 0.8,
     },
     master = {
         new_status = "master",
@@ -103,3 +102,9 @@ hl.config({
     },
 })
 
+
+-- ~0.8 scale for the scratchpad, replaces the deprecated dwindle.special_scale_factor
+hl.workspace_rule({
+    workspace = "special:scratchpad",
+    gaps_out = 100,
+})
