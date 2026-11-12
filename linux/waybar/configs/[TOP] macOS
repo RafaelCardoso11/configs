@@ -19,10 +19,11 @@
 	"network#ip",
 	],
 
-"modules-center": [],
+"modules-center": [
+	"custom/media",
+	],
 
 "modules-right": [
-	"mpris#mac",
 	"tray",
 	"custom/thememode",
 	"custom/presentation",
@@ -150,13 +151,11 @@
 	"on-click": "ip -4 -o route get 1 | grep -oP 'src \\K\\S+' | wl-copy -n && notify-send -a Network 'IP copied'",
 	},
 
-"mpris#mac": {
-	"format": "{status_icon}  {title}",
-	"format-paused": "{status_icon}  <span alpha='60%'>{title}</span>",
-	"format-stopped": "",
-	"status-icons": { "playing": "󰏤", "paused": "󰐊", "stopped": "󰓛" },
-	"title-len": 40,
-	"tooltip-format": "{player}: {title} — {artist}",
+"custom/media": {
+	"exec": "$HOME/.config/hypr/scripts/MediaTitle.py",
+	"return-type": "json",
+	"format": "{}",
+	"restart-interval": 2,
 	"on-click": "playerctl play-pause",
 	"on-click-right": "playerctl next",
 	"on-scroll-up": "playerctl position 5+",

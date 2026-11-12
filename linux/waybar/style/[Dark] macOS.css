@@ -25,7 +25,7 @@ tooltip label {
 	color: rgba(255, 255, 255, 0.92);
 }
 
-#mpris,
+#custom-media,
 #stats,
 #custom-apple,
 #custom-window,
@@ -89,7 +89,7 @@ tooltip label {
 	background: transparent;
 }
 
-#mpris:hover,
+#custom-media:hover,
 #stats:hover,
 #network.ip:hover,
 #custom-apple:hover,
@@ -202,3 +202,76 @@ tooltip label {
 #cpu {
 	padding-right: 8px;
 }
+
+/* now playing: centered translucent pill; text and waveform motion come from MediaTitle.py */
+#custom-media {
+	border-radius: 14px;
+	font-size: 14px;
+	transition: all 400ms ease-in-out;
+}
+
+#custom-media.playing {
+	background-color: rgba(255, 255, 255, 0.1);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+#custom-media.paused {
+	color: rgba(255, 255, 255, 0.55);
+	background-color: rgba(255, 255, 255, 0.04);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+#custom-media:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+/* progress line along the bottom of the pill; MediaTitle.py sets pN in steps of 5 */
+#custom-media.p0,
+#custom-media.p5,
+#custom-media.p10,
+#custom-media.p15,
+#custom-media.p20,
+#custom-media.p25,
+#custom-media.p30,
+#custom-media.p35,
+#custom-media.p40,
+#custom-media.p45,
+#custom-media.p50,
+#custom-media.p55,
+#custom-media.p60,
+#custom-media.p65,
+#custom-media.p70,
+#custom-media.p75,
+#custom-media.p80,
+#custom-media.p85,
+#custom-media.p90,
+#custom-media.p95,
+#custom-media.p100 {
+	background-size: 100% 2px;
+	background-repeat: no-repeat;
+	/* content-box keeps the line inside the padding and 92% lifts it ~2px, so the pill's rounded ends don't clip it */
+	background-origin: content-box;
+	background-position: left 92%;
+}
+#custom-media.p0 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 0%, transparent 0%); }
+#custom-media.p5 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 5%, transparent 5%); }
+#custom-media.p10 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 10%, transparent 10%); }
+#custom-media.p15 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 15%, transparent 15%); }
+#custom-media.p20 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 20%, transparent 20%); }
+#custom-media.p25 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 25%, transparent 25%); }
+#custom-media.p30 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 30%, transparent 30%); }
+#custom-media.p35 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 35%, transparent 35%); }
+#custom-media.p40 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 40%, transparent 40%); }
+#custom-media.p45 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 45%, transparent 45%); }
+#custom-media.p50 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 50%, transparent 50%); }
+#custom-media.p55 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 55%, transparent 55%); }
+#custom-media.p60 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 60%, transparent 60%); }
+#custom-media.p65 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 65%, transparent 65%); }
+#custom-media.p70 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 70%, transparent 70%); }
+#custom-media.p75 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 75%, transparent 75%); }
+#custom-media.p80 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 80%, transparent 80%); }
+#custom-media.p85 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 85%, transparent 85%); }
+#custom-media.p90 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 90%, transparent 90%); }
+#custom-media.p95 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 95%, transparent 95%); }
+#custom-media.p100 { background-image: linear-gradient(to right, rgba(255, 255, 255, 0.55) 100%, transparent 100%); }
